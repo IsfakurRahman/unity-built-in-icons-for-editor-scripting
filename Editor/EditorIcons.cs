@@ -14,12 +14,16 @@ public class EditorIcons : EditorWindow {
     string search;
 
     [MenuItem("Tools/Editor Icons")]
-    static void Init()
+    public static void ShowWindow()
     {
         EditorIcons window = (EditorIcons)GetWindow(typeof(EditorIcons));
         window.Show();
         window.minSize = new Vector2(300, 300);
+        Init();
+    }
 
+    static void Init()
+    {
         AllIcons = new List<Texture2D>(Resources.FindObjectsOfTypeAll(typeof(Texture2D)) as Texture2D[]);
         AllIcons.Sort((iconA, iconB) => string.Compare(iconA.name, iconB.name, System.StringComparison.OrdinalIgnoreCase));
         for (int i = 0; i < AllIcons.Count; i++)
@@ -49,7 +53,7 @@ public class EditorIcons : EditorWindow {
             List<Texture2D> newList = new List<Texture2D>();
             for (int i = 0; i < icons.Count; i++)
             {
-                if (icons[i].name.IndexOf(search) >= 0)
+                if (icons[i].name.ToLower().IndexOf(search.ToLower()) >= 0)
                 {
                     newList.Add(icons[i]);
                 }
